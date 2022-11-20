@@ -22,17 +22,17 @@
       </div>
       <form @submit.prevent>
         <div class="form-group mb-3">
-          <label for="taskTitleInput" class="form-label">Title</label>
+          <label for="taskTitleInput" class="form-label">Enter your payment reference</label>
           <input
             v-model="title"
             type="text"
             class="form-control"
             id="taskTitleInput"
-            placeholder="Title"
+            placeholder="Payment Reference"
             required
           />
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group mb-3" style="display: none;">
           <label for="taskBodyInput" class="form-label">Body</label>
           <textarea
             v-model="body"
@@ -43,7 +43,7 @@
             required
           />
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group mb-3" style="display: none;">
           <label for="taskBodyInput" class="form-label">Due date</label>
           <div class="input-group">
             <input
@@ -56,14 +56,14 @@
         </div>
         <div class="form-group">
           <button v-on:click="createTask" class="btn btn-primary">
-            Create task
+            Search
           </button>
         </div>
       </form>
     </div>
 
     <div class="container bg-light p-3">
-      <h2>My Tasks</h2>
+      <h2>Payments List</h2>
       <div v-if="loading">
         <p>Loading...</p>
       </div>
@@ -78,13 +78,19 @@
                 Delete
               </button>
               <h5 class="card-title">{{ item.title }}</h5>
+              <label class="form-label"><b>End-to-End ID:</b>{{ item.endtoendID }}</label> &nbsp;&nbsp; <label class="form-label"><b>System Reference:</b>{{ item.gcpID}}</label> &nbsp;&nbsp; <label class="form-label" id="showStatus"><b>Status:</b>{{ item.status}}</label>
+              <br>
+              <label class="form-label"><b>Additional Info:</b>{{ item.remittanceInfo}}</label>
+              <br>
+              <label><b>Client Reference:</b>{{ item.clientref}}</label> &nbsp;&nbsp; <label><b>Amount:</b>{{ item.amt}}</label>
+              <br>
               <small class="text-secondary"
-                >Created: {{ item.createdAt }}</small
+                >Searched on: {{ item.createdAt }}</small
               >
-              <small class="text-secondary" v-if="item.dueDate"
+              <small class="text-secondary" v-if="item.dueDate" style="display: none;"
                 >&nbsp;/&nbsp;Due: {{ item.dueDate }}</small
               >
-              <p class="card-text">
+              <p class="card-text" style="display: none;">
                 {{ item.body }}
               </p>
               <div class="progress" v-if="item.progress">
@@ -98,10 +104,14 @@
                   {{ item.progress }}
                 </div>
               </div>
-              <div class="text-secondary mb-2" v-if="item.upload" href="#">
+              <div class="text-secondary mb-2">
+                <button @click="getTaskById(item.id)" class="btn btn-outline-secondary float-left">
+                  Refresh
+                </button>
+               <div class="text-secondary mb-2" v-if="item.upload" href="#" style="display: none;">
                 1 attachment
               </div>
-              <div v-else class="mb-2">
+              <div v-else class="mb-2" style="display: none;">
                 Attachment:
                 <input type="file" @change="fileChanged" ref="file" />
                 <button
@@ -111,6 +121,7 @@
                   Upload
                 </button>
               </div>
+              
               <small v-if="item.labels" class="text-secondary"
                 >Detected labels:</small
               >
@@ -126,7 +137,6 @@
     </div>
   </main>
 </template>
-
 <script>
 import Vue from "vue";
 import axios from "axios";
@@ -212,6 +222,23 @@ export default {
           this.error = `Error getting tasks: ${err.message}`;
         });
       this.loading = false;
+    },
+    async getTaskById(id) {
+      id = id.split("#")[1];
+      console.log(`Getting task ${id}`);
+      this.error = "";
+      let token = getAuthToken();
+      await axios
+        .get(`/tasks/${id}`, {headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(() => {
+          console.log(`Got task ${id}`);
+        })
+        .catch((err) => {
+          console.log(err);
+          this.error = `Error getting task: ${err.message}`;
+        });
+        await this.getTasks();
     },
     fileChanged(e) {
       var files = e.target.files || e.dataTransfer.files;

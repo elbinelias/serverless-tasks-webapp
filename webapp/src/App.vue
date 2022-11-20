@@ -5,7 +5,7 @@
         v-if="isLoggedIn()"
         class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
       >
-        <router-link to="/" class="navbar-brand">Task List</router-link>
+        <router-link to="/" class="navbar-brand">Transactions Information Service</router-link>
         <button
           class="navbar-toggler"
           type="button"
@@ -22,15 +22,12 @@
             <li class="nav-item"></li>
           </ul>
           <ul class="nav navbar-nav navbar-right mr-4 text-light">
-            <li class="nav-item mr-4">
-              Hello,
-              {{ username }}
-            </li>
+            <li class="nav-item mr-4"></li>
             <!-- <li class="nav-item mr-4">
               <router-link to="/about">About</router-link>
             </li> -->
             <li class="nav-item">
-              <router-link to="/logout">Sign out</router-link>
+              <router-link to="/logout">Close</router-link>
             </li>
           </ul>
         </div>
