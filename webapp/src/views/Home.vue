@@ -78,11 +78,13 @@
                 Delete
               </button>
               <h5 class="card-title">{{ item.title }}</h5>
-              <label class="form-label"><b>End-to-End ID:</b>{{ item.endtoendID }}</label> &nbsp;&nbsp; <label class="form-label"><b>System Reference:</b>{{ item.gcpID}}</label> &nbsp;&nbsp; <label class="form-label" id="showStatus"><b>Status:</b>{{ item.status}}</label>
+              <label class="form-label"><b>End-to-End ID:</b>&nbsp;{{ item.endtoendID }}</label> &nbsp;&nbsp; <label class="form-label"><b>System Reference 1:</b>&nbsp;{{ item.gcpID}}</label> &nbsp;&nbsp; <label class="form-label" id="showStatus"><b>Status:</b>&nbsp;{{ item.statuschange}}</label>
               <br>
-              <label class="form-label"><b>Additional Info:</b>{{ item.remittanceInfo}}</label>
+              <label class="form-label"><b>Additional Info:</b>&nbsp;{{ item.remittanceInfo}}</label>
               <br>
-              <label><b>Client Reference:</b>{{ item.clientref}}</label> &nbsp;&nbsp; <label><b>Amount:</b>{{ item.amt}}</label>
+              <label><b>Client Reference:</b>&nbsp;{{ item.clientref}}</label> &nbsp;&nbsp; <label><b>Amount:</b>&nbsp;{{ item.amt}}</label>
+              <br>
+              <label><b>Transaction ID:</b>&nbsp;{{ item.transactionid}}</label> &nbsp;&nbsp; <label><b>System Reference 2:</b>&nbsp;{{ item.bifastid}}</label>
               <br>
               <small class="text-secondary"
                 >Searched on: {{ item.createdAt }}</small
