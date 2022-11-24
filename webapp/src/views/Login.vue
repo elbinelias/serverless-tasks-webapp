@@ -91,6 +91,9 @@
         Sign in
       </button>
     </div>
+    <div class="form-group">
+      <label><href>or Register here </href></label>
+    </div>
   </div>
 </template>
 
