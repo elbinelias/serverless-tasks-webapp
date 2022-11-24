@@ -59,6 +59,13 @@
             Search
           </button>
         </div>
+        <div class="form-group">
+          <label>Or upload a file:&nbsp;&nbsp;</label>
+          <br>
+          <button class="btn btn-outline-secondary float-left">
+            Upload file
+          </button>
+        </div>
       </form>
     </div>
 
